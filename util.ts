@@ -1,5 +1,6 @@
 import { profile } from "./models/profile";
-import { Profile } from "../sdvx@asphyxia/models/profile";
+import { settings } from "./models/settings";
+import { pc_data } from "./models/pc_data";
 
 export function IDToCode(id: number) {
   const padded = _.padStart(id.toString(), 8);
@@ -37,6 +38,9 @@ export async function IIDXidTorefid(iidxid: number) {
     collection: "profile",
     iidxid: iidxid,
   });
+
+  if (_.isNil(profile)) return null;
+
   return profile.refid;
 }
 
@@ -60,20 +64,30 @@ export function AppendSettingConverter(
   cf: boolean,
   df: boolean,
   af: boolean,
+  rf: boolean,
+  rr: boolean,
+  rs: boolean,
   hp: boolean,
   dg: boolean,
   ch: boolean,
-  hi: boolean
+  rp: boolean,
+  hi: boolean,
 ) {
   const result =
-    Number(sf) * 1 +
-    Number(cf) * 2 +
-    Number(df) * 4 +
-    Number(af) * 8 +
-    Number(hp) * 256 +
-    Number(dg) * 512 +
-    Number(ch) * 1024 +
-    Number(hi) * 4196;
+    Number(sf) << 0 |
+    Number(cf) << 1 |
+    Number(df) << 2 |
+    Number(af) << 3 |
+    Number(rf) << 4 |
+    Number(false) << 5 | // UNK //
+    Number(rr) << 6 |
+    Number(rs) << 7 |
+    Number(hp) << 8 |
+    Number(dg) << 9 |
+    Number(ch) << 10 |
+    Number(rp) << 11 |
+    Number(hi) << 12;
+    
   return result;
 }
 
@@ -101,9 +115,74 @@ export function DateToName(now: number, score_time: number) {
   }
 }
 
-export async function refidToName(refid: string) {
+export function buffToHex(buff) {
+  return Buffer.from(buff).toString("hex");
+}
+
+export function randomIntRange(min, max) {
+  return Math.floor(Math.random() * max) + min;
+}
+
+export async function refidToProfile(refid: string) {
   const profile = await DB.FindOne<profile>(refid, {
     collection: "profile",
   });
-  return profile.name;
+
+  let profile_data = [];
+
+  try {
+    profile_data = [
+      profile.name,
+      profile.pid,
+      profile.iidxid,
+      profile.iidxidstr,
+    ];
+  } catch {
+    profile_data = ["", 0, 0, ""];
+  }
+
+  return profile_data;
+}
+
+export async function refidToQpro(refid: string) {
+  const setting = await DB.FindOne<settings>(refid, {
+    collection: "settings",
+  });
+
+  let qpro_data = [];
+
+  try {
+    qpro_data = [
+      setting.qpro_hair,
+      setting.qpro_head,
+      setting.qpro_face,
+      setting.qpro_body,
+      setting.qpro_hand,
+    ];
+  } catch {
+    qpro_data = [0, 0, 0, 0, 0];
+  } 
+  
+  return qpro_data;
+}
+
+export async function refidToPd(refid: string) {
+  const pc_data = await DB.FindOne<pc_data>(refid, {
+    collection: "pc_data",
+  });
+
+  let p_data = [];
+
+  try {
+    p_data = [
+      pc_data.sgid,
+      pc_data.dgid,
+      pc_data.sach,
+      pc_data.dach,
+    ];
+  } catch {
+    p_data = [0, 0, 0, 0];
+  }
+
+  return p_data;
 }

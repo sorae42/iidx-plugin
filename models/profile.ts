@@ -6,4 +6,8 @@ export interface profile {
   iidxid: number;
   iidxidstr: string;
   refid: string;
+
+  language: number;
+  tower_kbd: number;
+  tower_scr: number;
 }

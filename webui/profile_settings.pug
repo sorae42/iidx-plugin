@@ -1,0 +1,777 @@
+//DATA//
+  profile: DB.FindOne(refid, { collection: "profile" })
+  setting: DB.FindOne(refid, { collection: "settings" })
+
+// TODO(FIXME): Well, This is too hardcoded.
+-
+  const frame_list = [
+    "デフォルト",
+  ];
+
+  const menumusic_list = [
+    "デフォルト",
+  ];
+
+  const noteburst_list = [
+    "デフォルト",
+    "初代",
+    "9th Style",
+    "IIDX RED",
+    "HAPPY SKY",
+    "DistorteD",
+    "GOLD",
+    "DJ TROOPERS",
+    "EMPRESS",
+    "SIRIUS",
+    "Resort Anthem",
+    "Lincle",
+    "tricoro",
+    "SPADA",
+    "オンリーワンボム",
+    "PENDUAL",
+    "copula",
+    "SINOBUZ",
+    "CANNON BALLERS",
+    "Rootage",
+    "HEROIC VERSE",
+    "BISTROVERボム",
+    "いいねフラッシュ",
+    "RESIDENT"
+  ];
+
+  const turntable_list = [
+    "デフォルト",
+    "トラン",
+    "JOJO",
+    "デルタ",
+    "オレンジディスク",
+    "DistorteD",
+    "GOLD",
+    "DJ TROOPERS",
+    "EMPRESS",
+    "SIRIUS",
+    "Resort Anthem",
+    "Lincle",
+    "tricoro",
+    "SPADA",
+    "灼熱",
+    "オンリーワンレコード",
+    "PENDUAL",
+    "copula",
+    "SINOBUZ",
+    "CANNON BALLERS",
+    "Rootage",
+    "HEROIC VERSE",
+    "BEMANI PRO LEAGUE",
+    "BPL ROUND1",
+    "BPL APINA VRAMeS",
+    "BPL SILKHAT",
+    "BPL レジャーランド",
+    "BPL SUPER NOVA Tohoku",
+    "BPL GAME PANIC",
+    "いちご",
+    "CastHour",
+    "CastHour2",
+    "BEMANI PRO LEAGUE SEASON 2",
+    "BPLS2 APINA VRAMeS",
+    "BPLS2 GiGO",
+    "BPLS2 GAME PANIC",
+    "BPLS2 SILKHAT",
+    "BPLS2 SUPERNOVA Tohoku",
+    "BPLS2 TAITO STATION Tradz",
+    "BPLS2 ROUND1",
+    "BPLS2 レジャーランド",
+    "RESIDENT",
+    "BEMANI PRO LEAGUE SEASON 3",
+  ];
+
+  const lanecover_list = [
+    "デフォルト",
+    "SigSig",
+    "内部フレーム",
+    "空",
+    "KAMAITACHI",
+    "タオル",
+    "コスモス",
+    "度胸兄弟",
+    "Blind Justice",
+    "迷彩",
+    "bloomin feeling",
+    "Marie Antoinette",
+    "Elisha",
+    "Kung-fu Empire",
+    "Tune of beat#3",
+    "EMPRESS",
+    "Programmed World",
+    "3y3s",
+    "UMEGIRI",
+    "KANZAKI",
+    "Rock Da House",
+    "THE DOOR INTO RAINBOW",
+    "Aegis",
+    "Vermillion",
+    "Phoenix",
+    "Lucky Days",
+    "Almace",
+    "DIAMOND CROSSING",
+    "Mamonis",
+    "Ashemu",
+    "Bulluvegola",
+    "Beridzebeth",
+    "Levaslater",
+    "STN",
+    "Rche",
+    "Neulakyussra",
+    "Cybele",
+    "Cuvelia",
+    "Liberation",
+    "Praludium",
+    "少女アリスと箱庭幻想コンチェルト",
+    "ReGENERATION",
+    "20 system bg",
+    "旋律のドグマ～Miserables～/TYPE A",
+    "旋律のドグマ～Miserables～/TYPE B",
+    "Elektrick U-Phoria",
+    "MAGIC & LOVE",
+    "スパーダレリーフ",
+    "S!ck",
+    "CONCEPTUAL",
+    "ΕΛΠΙΣ",
+    "rumrum triplets",
+    "SYNC-ANTHEM",
+    "Thor's Hammer",
+    "Plan 8",
+    "仮想空間の旅人たち",
+    "8bit Princess",
+    "planarian",
+    "Dynamite",
+    "龍と少女とデコヒーレンス",
+    "トリカゴノ鳳凰",
+    "Proof of the existence",
+    "BRAVE GLOW/機動怪獣リングール",
+    "BRAVE GLOW/トリコロイダー",
+    "VEGA/VEGAうさぎ",
+    "VEGA/中のひと",
+    "カジノファイヤーことみちゃん",
+    "New Lights",
+    "灼熱くんやきそば",
+    "即席！脳直★ミュージックシステム",
+    "キャトられ恋はモ～モク",
+    "オンリーワンカバー",
+    "ジザル",
+    "ジャックティーロ",
+    "ジャックハンス",
+    "イェンス",
+    "アムドゥシアン",
+    "マクスウェリオン",
+    "ラプラシア",
+    "ルシェ",
+    "スモモ",
+    "ファウラ",
+    "ベリゼベス",
+    "エルピス・キラ",
+    "フェリーラ",
+    "オールパトナ",
+    "あいむちゃん",
+    "人魚のPrim",
+    "アヤカシ二人",
+    "SHELTER OF THE MIND",
+    "Acid Pumper",
+    "X",
+    "ハーティー",
+    "Nightmare before oversleep",
+    "Highcharge Divolt",
+    "Godspeed（少年）",
+    "車掌イージス",
+    "GENERATE",
+    "Dynamite",
+    "格闘乙女",
+    "レル DX2300系",
+    "つゆ太",
+    "La dolce primavera",
+    "AO-1",
+    "真 地獄超特急 -HELL or HELL-",
+    "モード",
+    "ミニョンヌ鉄道兄弟",
+    "冬椿",
+    "PAPAYAPA BASS",
+    "鴉",
+    "AsiaN distractive",
+    "TOGAKUSHI",
+    "Modular Technology",
+    "獅子霞麗ノ舞",
+    "Music is The Answer",
+    "!Viva!",
+    "SINOBUZ UI",
+    "ChaserXX",
+    "Amor De Verao",
+    "エディブルフラワーの独白",
+    "ハイ*ビスカス ft. Kanae Asaba",
+    "Midnight Lady",
+    "FUTURE is Dead",
+    "Break Stasis",
+    "草原の王女-軌跡を辿って-",
+    "Exhaust Hype",
+    "25UI",
+    "焔極OVERKILL",
+    "Breakin' Chain",
+    "津軽雪",
+    "Yellow Sketch(RX-Ver.S.P.L.)",
+    "Steel Edge",
+    "Go Ahead!!",
+    "Sky High",
+    "イザナミノナゲキ",
+    "GuNGNiR",
+    "ディッシュウォッシャー◎彡おいわちゃん",
+    "BroGamer",
+    "FUZIN RIZIN",
+    "Mare Nectaris",
+    "Quakes",
+    "Rave Cannon",
+    "ECHIDNA",
+    "Snakey Kung-fu",
+    "刃図羅",
+    "忍恋花",
+    "法具「バズラ」",
+    "HADES",
+    "DEATH†ZIGOQ",
+    "東京神話",
+    "Initiation",
+    "EMERALDAS",
+    "Chemical Cookie",
+    "ナイトシティー・アヴァンチュール",
+    "シムルグの目醒め",
+    "n'pa pa BBQ",
+    "ANCHOR",
+    "IIDX AIR RACE",
+    "THE DAY OF JUBILATIONS",
+    "HEISEI",
+    "IDC feat.REVERBEE",
+    "Yum Yum Jelly",
+    "夏の匂い。キミの残像。 ft. Kanae Asaba",
+    "Hurry Hurry",
+    "OVERTIME",
+    "ミストレス・アンに花束を",
+    "Ember Lights",
+    "Rootage",
+    "Urban Constellations",
+    "金野火織の金色提言",
+    "龍王の霊廟(Mausoleum Of The Primal Dragon)",
+    "Painful Fate",
+    "Drastic Dramatic",
+    "抱きしめてモナムール",
+    "Trill auf G",
+    "Lethal Weapon",
+    "HEROIC VERSE",
+    "Primitive Vibes",
+    "Calvados Queen",
+    "Ska-sh All Neurons!!",
+    "Moving on",
+    "Hyper Drive feat. ぷにぷに電機",
+    "THE BRAVE MUST DIE",
+    "曼荼羅恋々",
+    "Silly Love",
+    "Change Yourself",
+    "Virus Funk",
+    "BEMANI PRO LEAGUE",
+    "BPL ROUND1",
+    "BPL APINA VRAMeS",
+    "BPL SILKHAT",
+    "BPL レジャーランド",
+    "BPL SUPER NOVA Tohoku",
+    "BPL GAME PANIC",
+    "涙のテ・エストラーニョ・ムーチョ",
+    "∀",
+    "S-Bahn",
+    "Vitrum ",
+    "水無月の雫",
+    "Lovely Howdy Cowboy!!",
+    "WAKE UP NOW",
+    "魔法のかくれんぼ",
+    "POLKAMAИIA",
+    "POLKAMAИIA(2)",
+    "犬に雨傘",
+    "Ah Hah Yeah",
+    "HIGH VOLTAGE ",
+    "IIDX28汎用",
+    "Chewingood!!!",
+    "がっつり陰キャ!? 怪盗いいんちょの億劫",
+    "がっつり陰キャ!? 怪盗いいんちょの億劫(2)",
+    "魅惑のYUMMYスイーツ",
+    "度胸兄弟",
+    "STOIC HYPOTHESIS",
+    "GHOST",
+    "GIGA VIOLATE",
+    "Crank It",
+    "Horizons of Promise",
+    "Backyard Stars",
+    "Smashing Wedge",
+    "HEROIC VERSE Shutter",
+    "LIGHTNING MODEL",
+    "ARENA UI 2.0",
+    "華麗なる大犬円舞曲",
+    "BPL2021 BLACK",
+    "BPL2021 WHITE",
+    "召しませ！BISTROVER",
+    "ピンシェフくん",
+    "バッド・スイーツ、バッド・ドリーム",
+    "Sinus Iridum",
+    "ジェイ君とドゥイさん",
+    "あまいじかん",
+    "リフレナ",
+    "THE PEERLESS UNDER HEAVEN",
+    "二人ノ廃城幽踊宴",
+    "乱膳の舞姫",
+    "ハイテックトキオ",
+    "月とミルク",
+    "Ariah",
+    "LIVE DRIVING!! feat. 花たん",
+    "Wonderful Escape",
+    "GiGaGaHell",
+    "オールトの雲",
+    "Ventriloquist",
+    "DREAM OF SPACE UFO ABDUCTION",
+    "Skreaming for Salvation",
+    "No Day But Today!",
+    "CastHour",
+    "BEMANI PRO LEAGUE SEASON 2",
+    "BPLS2 APINA VRAMeS",
+    "BPLS2 GiGO",
+    "BPLS2 GAME PANIC",
+    "BPLS2 SILKHAT",
+    "BPLS2 SUPERNOVA Tohoku",
+    "BPLS2 TAITO STATION Tradz",
+    "BPLS2 ROUND1",
+    "BPLS2 レジャーランド",
+    "もにに",
+    "ピカグレ御守",
+    "ふるこんぼ御守",
+    "ANEMONE",
+    "お肉",
+    "WHA",
+    "ABSOLUTE EVIL",
+    "RAGE feat.H14 of LEONAIR",
+    "RESIDENT UI",
+    "B.O.D.Y.",
+    "Shadow World",
+    "TECHNOPHOBIA",
+    "Programmed Genom",
+    "C-C-C-N-N-N",
+    "儚キ戀ノ幻想譚",
+    "きゅんです。",
+    "Summerblue",
+    "罪過の聖堂",
+    "CUE CUE RESCUE",
+    "Sunny Day Vibes",
+    "BEMANI PRO LEAGUE SEASON 3",
+    "BPLS3 APINA VRAMeS",
+    "BPLS3 GiGO",
+    "BPLS3 GAME PANIC",
+    "BPLS3 SILK HAT",
+    "BPLS3 SUPERNOVA Tohoku",
+    "BPLS3 TAITO STATION Tradz",
+    "BPLS3 ROUND1",
+    "BPLS3 レジャーランド",
+  ];
+
+  const notes_list = [
+    "通常ノーツ",
+    "ゴージャス",
+    "アクア",
+    "ギャル",
+    "フォトン",
+    "パステル",
+    "シンプルカラー",
+    "ライト",
+    "tricoro",
+    "バブル",
+  ];
+
+  const fullcombo_list = [
+    "デフォルト",
+    "IIDX RED",
+    "HAPPY SKY",
+    "DistorteD",
+    "GOLD",
+    "DJ TROOPERS",
+    "EMPRESS",
+    "SIRIUS",
+    "Resort Anthem",
+    "Lincle",
+    "tricoro",
+    "SPADA",
+    "オンリーワンフルコンボ",
+    "PENDUAL",
+    "copula",
+    "SINOBUZ",
+    "CANNON BALLERS",
+    "Rootage",
+    "HEROIC VERSE",
+    "BISTROVER SLASH",
+    "CastHour",
+    "RESIDENT",
+  ];
+
+  const keybeam_list = [
+    "デフォルト",
+    "オレンジ",
+    "ピンク",
+    "モノクロ",
+    "ライトニング",
+    "オンリーワンビーム",
+    "コピュライト",
+    "CBビーム",
+    "HEROIC VERSE",
+    "BISTROVER BURNER",
+    "フレネルビーム",
+    "RESIDENT",
+  ];
+
+  const judge_list = [
+    "デフォルト",
+    "デジタル",
+    "スマート",
+    "メタリックブルー",
+    "テクノ",
+    "ワイヤー",
+    "ABYSS",
+    "SPADA",
+    "ANCIENT",
+    "オンリーワンジャッジ",
+    "電光掲示板風",
+    "SINOBUZ",
+    "セグメント",
+    "Rootage",
+    "HEROIC VERSE",
+    "BISTROVER JUDGE",
+    "CastHour",
+    "RESIDENT",
+  ];
+
+  const premium_skin_list = [
+    "デフォルト",
+    "ピンシェフ",
+    "トラン",
+    "BPLS3 APINA",
+    "BPLS3 GiGO",
+    "BPLS3 GAME PANIC",
+    "BPLS3 SILKHAT",
+    "BPLS3 SUPERNOVA",
+    "BPLS3 TAITO Tradz",
+    "BPLS3 ROUND1",
+    "BPLS3 レジャーランド",
+  ];
+
+  const effect_list = [
+    "OFF",
+    "ECHO / REVERB",
+    "COMPRESSOR / REVERB EX",
+    "CHORUS / FLANGER",
+    "GARGLE / DISTORTION",
+    "EQ ONLY"
+  ];
+
+  const bombsize_list = [
+    "100%",
+    "70%",
+    "80%",
+    "90%",
+    "110%",
+    "120%",
+    "130%",
+  ];
+
+  const notesize_list = [
+    "通常",
+    "極細",
+    "細",
+    "太",
+  ];
+
+  const notebeamsize_list = [
+    "通常",
+    "ベリーショート",
+    "ショート",
+    "ロング",
+  ];
+
+  const first_note_preview_list = [
+    "デフォルト",
+    "Always ON",
+    "Always OFF",
+  ];
+
+  const category_vox_list = [
+    "デフォルト"
+  ];
+
+div
+  .card
+    .card-header
+      p.card-header-title
+        span.icon
+          i.mdi.mdi-account-edit
+        | Settings
+    .card-content
+      form(method="post" action="/emit/updateIIDXProfileSettings")
+        .field
+          label.label ID
+          .control
+            input.input(type="text" name="iidxid", value=profile.iidxidstr readonly)
+        .field
+          label.label Name
+          .control
+            input.input(type="text" name="name", value=profile.name)
+        .field
+          label.label Frame
+          .control
+            .select
+              select(name="frame")
+                each i in frame_list
+                  option(selected=(i==frame_list[setting.frame])) #{i}
+        .field
+          label.label Menu Music
+          .control
+            .select
+              select(name="menu_music")
+                each i in menumusic_list
+                  option(selected=(i==menumusic_list[setting.menu_music])) #{i}
+        .field
+          label.label Category Voice
+          .control
+            .select
+              select(name="category_vox")
+                each i in category_vox_list
+                  option(selected=(i==category_vox_list[setting.category_vox])) #{i}
+        .field
+          label.label Premium Skin
+          .control
+            .select
+              select(name="premium_skin")
+                each i in premium_skin_list
+                  option(selected=(i==premium_skin_list[setting.premium_skin])) #{i}
+        .field
+          label.label Note Burst
+          .control
+            .select
+              select(name="note_burst")
+                each i in noteburst_list
+                  option(selected=(i==noteburst_list[setting.note_burst])) #{i}
+        .field
+          label.label Turntable
+          .control
+            .select
+              select(name="turntable")
+                each i in turntable_list
+                  option(selected=(i==turntable_list[setting.turntable])) #{i}
+        .field
+          label.label Lane Cover
+          .control
+            .select
+              select(name="lane_cover")
+                each i in lanecover_list
+                  option(selected=(i==lanecover_list[setting.lane_cover])) #{i}
+        .field
+          label.label Pacemaker Cover
+          .control
+            .select
+              select(name="pacemaker_cover")
+                each i in lanecover_list
+                  option(selected=(i==lanecover_list[setting.pacemaker_cover])) #{i}
+        .field
+          label.label Lift Cover
+          .control
+            .select
+              select(name="lift_cover")
+                each i in lanecover_list
+                  option(selected=(i==lanecover_list[setting.lift_cover])) #{i}
+        .field
+          label.label Judge Font
+          .control
+            .select
+              select(name="judge_font")
+                each i in judge_list
+                  option(selected=(i==judge_list[setting.judge_font])) #{i}
+        .field
+          label.label Note Skin
+          .control
+            .select
+              select(name="note_skin")
+                each i in notes_list
+                  option(selected=(i==notes_list[setting.note_skin])) #{i}
+        .field
+          label.label Note Beam
+          .control
+            .select
+              select(name="note_beam")
+                each i in keybeam_list
+                  option(selected=(i==keybeam_list[setting.note_beam])) #{i}
+        .field
+          label.label Full Combo Splash
+          .control
+            .select
+              select(name="full_combo_splash")
+                each i in fullcombo_list
+                  option(selected=(i==fullcombo_list[setting.full_combo_splash])) #{i}
+        .field
+          label.label Note Bomb Size
+          .control
+            .select
+              select(name="bomb_size")
+                each i in bombsize_list
+                  option(selected=(i==bombsize_list[setting.bomb_size])) #{i}
+        .field
+          label.label Note Beam Size
+          .control
+            .select
+              select(name="note_beam_size")
+                each i in notebeamsize_list
+                  option(selected=(i==notebeamsize_list[setting.note_beam_size])) #{i}
+        .field
+          label.label Note Size
+          .control
+            .select
+              select(name="note_size")
+                each i in notesize_list
+                  option(selected=(i==notesize_list[setting.note_size])) #{i}
+        .field
+          label.label Disable HCN color
+          .control
+            input(type="checkbox" name="disable_hcn_color", checked=Boolean(setting.disable_hcn_color)) 
+        .field
+          label.label First Note Preview
+          .control
+            .select
+              select(name="first_note_preview")
+                each i in first_note_preview_list
+                  option(selected=(i==first_note_preview_list[setting.first_note_preview])) #{i}
+        .field
+          label.label BGM Flag [Unknown]
+          .control
+            if setting.skin_bgm_flg === undefined
+              input.input(type="number" name="skin_bgm_flg", value="0")
+            else
+              input.input(type="number" name="skin_bgm_flg", value=setting.skin_bgm_flg)
+        .field
+          label.label Frame Flag [Unknown]
+          .control
+            if setting.skin_frame_flg === undefined
+              input.input(type="number" name="skin_frame_flg", value="0")
+            else
+              input.input(type="number" name="skin_frame_flg", value=setting.skin_frame_flg)
+        .field
+          label.label Lane Flag [Unknown]
+          .control
+            if setting.skin_lane_flg === undefined
+              input.input(type="number" name="skin_lane_flg", value="0")
+            else
+              input.input(type="number" name="skin_lane_flg", value=setting.skin_lane_flg)
+        .field
+          label.label Score Folders
+          .control
+            input(type="checkbox" name="score_folders", checked=setting.score_folders) 
+        .field
+          label.label Clear Folders
+          .control
+            input(type="checkbox" name="clear_folders", checked=setting.clear_folders) 
+        .field
+          label.label Difficulty Folders
+          .control
+            input(type="checkbox" name="difficulty_folders", checked=setting.difficulty_folders) 
+        .field
+          label.label Alphabet Folders
+          .control
+            input(type="checkbox" name="alphabet_folders", checked=setting.alphabet_folders)
+        .field
+          label.label All Rival Play Folder
+          .control
+            if setting.rival_played === undefined
+              input(type="checkbox" name="rival_played", checked)
+            else
+              input(type="checkbox" name="rival_played", checked=setting.rival_played)
+        .field
+          label.label Rival Folders
+          .control
+            input(type="checkbox" name="rival_folders", checked=setting.rival_folders)
+        .field
+          label.label Rival Clear Folders
+          .control
+            input(type="checkbox" name="rival_clear_folders", checked=setting.rival_clear_folders)
+        .field
+          label.label Rival Score Data
+          .control
+            input(type="checkbox" name="rival_shop_info", checked=setting.rival_shop_info)
+        .field
+          label.label Classic Hi-SPEED
+          .control
+            input(type="checkbox" name="classic_hispeed", checked=setting.classic_hispeed)
+        .field
+          label.label Disable Graph Cut-In
+          .control
+            input(type="checkbox" name="disable_graphcutin", checked=setting.disable_graphcutin)
+        .field
+          label.label Disable Music Preview
+          .control
+            input(type="checkbox" name="disable_musicpreview", checked=Boolean(setting.disable_musicpreview))
+        .field
+          label.label Hide Play Count
+          .control
+            input(type="checkbox" name="hide_playcount", checked=setting.hide_playcount) 
+        .field
+          label.label Hide IIDXID
+          .control
+            input(type="checkbox" name="hide_iidxid", checked=setting.hide_iidxid) 
+        .field
+          label.label VEFX Lock
+          .control
+            input(type="checkbox" name="vefx_lock", checked=Boolean(setting.vefx_lock)) 
+        .field
+          label.label Effect [VEFX Lock]
+          .control
+            .select
+              select(name="effect")
+                each i in effect_list
+                  option(selected=(i==effect_list[setting.effect])) #{i}
+        .field
+          label.label Judge Position [Unknown]
+          .control
+            input.input(type="number" name="judge_pos", value=setting.judge_pos)
+        .field
+          label.label QPRO Head
+          .control
+            input.input(type="number" name="qpro_head", value=setting.qpro_head)
+        .field
+          label.label QPRO Hair
+          .control
+            input.input(type="number" name="qpro_hair", value=setting.qpro_hair)
+        .field
+          label.label QPRO Hand
+          .control
+            input.input(type="number" name="qpro_hand", value=setting.qpro_hand)
+        .field
+          label.label QPRO Face
+          .control
+            input.input(type="number" name="qpro_face", value=setting.qpro_face)
+        .field
+          label.label QPRO Body
+          .control
+            input.input(type="number" name="qpro_body", value=setting.qpro_body)
+        .field
+          label.label Random Lane Ticket
+          .control
+            if setting.random_lane_ticket === undefined
+              input.input(type="text" name="random_lane_ticket")
+            else
+              input.input(type="text" name="random_lane_ticket", value=setting.random_lane_ticket.toString())
+        .field
+          label.label Random Lane Ticket [Favorite]
+          .control
+            if setting.random_lane_ticket_search === undefined
+              input.input(type="text" name="random_lane_ticket_search")
+            else
+              input.input(type="text" name="random_lane_ticket_search", value=setting.random_lane_ticket_search.toString())
+        .field
+          button.button.is-primary(type="submit") 
+            span.icon
+              i.mdi.mdi-check
+            span Submit

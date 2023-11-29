@@ -5,6 +5,12 @@ export interface score {
 
   spmArray: number[];
   dpmArray: number[];
+
+  optArray: number[];
+  opt2Array: number[];
+
+  option_1: number;
+  option_2: number;
 }
 
 export interface score_detail {
@@ -18,4 +24,15 @@ export interface score_detail {
   miss: number;
 
   time: number;
+}
+
+export interface score_top {
+  collection: "score_top";
+
+  play_style: number;
+  music_id: number;
+
+  names: string[];
+  scores: number[];
+  clflgs: number[];
 }

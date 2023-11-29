@@ -1,0 +1,8 @@
+#{version}(status="0")
+  - for (let t of tArray)
+    ticket(ticket_id=t.id arrange_id=t.arrange expire_date=t.expire)
+  setting(sp="-1" dp_left="-1" dp_right="-1")
+  info(last_page="0")
+  free(num="0")
+  - for (let f of fArray)
+    favorite(arrange=f.arrange)

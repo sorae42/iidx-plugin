@@ -56,3 +56,19 @@ div
             body ----
           else
             body #{gradelist[pc_data.dgid]}
+      .field
+        label.label IIDX Tower [SCRATCH]
+        .body
+          - const tower_scr = profile.tower_scr
+          if tower_scr==null
+            body ----
+          else
+            body #{profile.tower_scr}
+      .field
+        label.label IIDX Tower [KEYBOARD]
+        .body
+          - const tower_kbd = profile.tower_kbd
+          if tower_kbd==null
+            body ----
+          else
+            body #{profile.tower_kbd}
