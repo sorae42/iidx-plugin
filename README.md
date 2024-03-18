@@ -1,20 +1,13 @@
 # IIDX
 
-Plugin Version: **v1.4.4_a4**
+Plugin Version: **v1.4.4_a4** (2023120600)
 
-This is A Core IIDX Plugin.
+This is A Core IIDX Plugin for EPOLIS.
 
 ## Before Upgrade
  - [!!] Your customize settings which were configurable in the Plugin Settings section will be reset.
  - You must play once after applying this update, otherwise profile customize setting page will not render.
  - Customize settings page is moved to Profiles -> (each profile) Detail -> Settings.
-
-## Supported Versions
- - HEROIC VERSE
- - BISTROVER
- - CastHour
- - RESIDENT
- - EPOLIS
 
 ## Features
  - STEP UP
