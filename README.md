@@ -1,8 +1,14 @@
 # IIDX
 
-Plugin Version: **v1.4.4_a4** (2023120600)
+Plugin Version: **v1.4.4_a4**
 
-This is A Core IIDX Plugin for EPOLIS.
+Asphyxia CORE IIDX Plugin.
+
+## Supported Version
+ - Bistrover
+ - CastHour
+ - RESIDENT
+ - EPOLIS
 
 ## Before Upgrade
  - [!!] Your customize settings which were configurable in the Plugin Settings section will be reset.
