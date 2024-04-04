@@ -1,6 +1,7 @@
 import { settings } from "../models/settings";
 import { profile } from "../models/profile";
 import { rival } from "../models/rival";
+import { lightning_settings } from "../models/lightning";
 import {
   effect_list,
   frame_list,
@@ -18,6 +19,8 @@ import {
   category_vox_list,
   notebeamsize_list,
   notesize_list,
+  premium_bg_list,
+  premiumbg_bright_list,
 } from "../data/customlist";
 
 export const updateProfileSettings = async (data: {
@@ -55,6 +58,8 @@ export const updateProfileSettings = async (data: {
   first_note_preview?: string;
 
   premium_skin?: string;
+  premium_bg?: string;
+  premium_bg_brightness?: string;
   judge_pos?: string;
   category_vox?: string;
 
@@ -67,6 +72,7 @@ export const updateProfileSettings = async (data: {
   qpro_hand?: string;
   qpro_face?: string;
   qpro_body?: string;
+  qpro_back?: string;
 
   random_lane_ticket?: string;
   random_lane_ticket_search?: string;
@@ -195,8 +201,16 @@ export const updateProfileSettings = async (data: {
     update.qpro_body = parseInt(data.qpro_body) || 0
   }
 
+  if (data.qpro_back && data.qpro_back.length > 0) {
+    update.qpro_back = parseInt(data.qpro_back) || 0
+  }
+
   if (data.premium_skin && data.premium_skin.length > 0) {
     update.premium_skin = premium_skin_list.indexOf(data.premium_skin)
+  }
+
+  if (data.premium_bg && data.premium_bg.length > 0) {
+    update.premium_bg = premium_bg_list.indexOf(data.premium_bg)
   }
 
   if (data.category_vox && data.category_vox.length > 0) {
@@ -239,6 +253,20 @@ export const updateProfileSettings = async (data: {
     update.random_lane_ticket_search = lane_values;
   } else {
     update.random_lane_ticket_search = [];
+  }
+
+  if (data.premium_bg_brightness && data.premium_bg_brightness.length > 0) {
+    await DB.Update<lightning_settings>(
+      profile.refid,
+      {
+        collection: 'lightning_settings'
+      },
+      {
+        $set: {
+          brightness: premiumbg_bright_list.indexOf(data.premium_bg_brightness)
+        }
+      }
+    );
   }
 
   if (data.name !== profile.name &&

@@ -1,6 +1,7 @@
 //DATA//
   profile: DB.FindOne(refid, { collection: "profile" })
   setting: DB.FindOne(refid, { collection: "settings" })
+  lightning_settings: DB.FindOne(refid, { collection: "lightning_settings" })
 
 // TODO(FIXME): Well, This is too hardcoded.
 -
@@ -36,7 +37,8 @@
     "HEROIC VERSE",
     "BISTROVERボム",
     "いいねフラッシュ",
-    "RESIDENT"
+    "RESIDENT",
+    "EPOLIS",
   ];
 
   const turntable_list = [
@@ -83,6 +85,7 @@
     "BPLS2 レジャーランド",
     "RESIDENT",
     "BEMANI PRO LEAGUE SEASON 3",
+    "EPOLIS",
   ];
 
   const lanecover_list = [
@@ -372,6 +375,29 @@
     "BPLS3 TAITO STATION Tradz",
     "BPLS3 ROUND1",
     "BPLS3 レジャーランド",
+    "Beyond Evolution",
+    "AWA AWA",
+    "BIGWAVERS",
+    "ONE AND ONLY",
+    "■□模様",
+    "ちょえちょえまぎか",
+    "栄冠のカンパネラ",
+    "Xerulean",
+    "STRAIGHT TO THE STARS",
+    "JUSTICE/GUILTY",
+    "EPOLIS UI",
+    "Dahlia",
+    "シンデレラ",
+    "れとりば！",
+    "夢縁",
+    "SOLAR ECLIPSE",
+    "Ghost Pulse",
+    "Iris",
+    "Get Higher",
+    "アタシ完全絶対正義ちゃん！",
+    "dj CELICA (IIDX31)",
+    "dj SHEM (IIDX31)",
+    "dj AMETO (IIDX30)",
   ];
 
   const notes_list = [
@@ -410,6 +436,7 @@
     "BISTROVER SLASH",
     "CastHour",
     "RESIDENT",
+    "EPOLIS",
   ];
 
   const keybeam_list = [
@@ -425,6 +452,7 @@
     "BISTROVER BURNER",
     "フレネルビーム",
     "RESIDENT",
+    "EPOLIS",
   ];
 
   const judge_list = [
@@ -446,6 +474,7 @@
     "BISTROVER JUDGE",
     "CastHour",
     "RESIDENT",
+    "EPOLIS",
   ];
 
   const premium_skin_list = [
@@ -461,6 +490,25 @@
     "BPLS3 ROUND1",
     "BPLS3 レジャーランド",
   ];
+
+  const premium_bg_list = [
+    "デフォルト",
+    "EPOLIS",
+    "エポリスシティへようこそ！",
+    "Ghost Pulse",
+    "Glitch N Ride",
+    "JUSTICE/GUILTY",
+    "シンデレラ",
+    "Iris",
+    "SOLAR ECLIPSE",
+    "TECHNOPHOBIA",
+    "CUE CUE RESCUE",
+    "STRAIGHT TO THE STARS",
+    "AWA AWA",
+    "ちょえちょえまぎか",
+    "ONE AND ONLY",
+    "クプロがたくさん",
+  ]
 
   const effect_list = [
     "OFF",
@@ -483,15 +531,15 @@
 
   const notesize_list = [
     "通常",
-    "極細",
     "細",
+    "極細",
     "太",
   ];
 
   const notebeamsize_list = [
     "通常",
-    "ベリーショート",
     "ショート",
+    "ベリーショート",
     "ロング",
   ];
 
@@ -503,6 +551,13 @@
 
   const category_vox_list = [
     "デフォルト"
+  ];
+
+  const premiumbg_bright_list = [
+    "暗い",
+    "やや暗い",
+    "やや明るい",
+    "明るい",
   ];
 
 div
@@ -544,12 +599,26 @@ div
                 each i in category_vox_list
                   option(selected=(i==category_vox_list[setting.category_vox])) #{i}
         .field
-          label.label Premium Skin
+          label.label Premium Area Skin
           .control
             .select
               select(name="premium_skin")
                 each i in premium_skin_list
                   option(selected=(i==premium_skin_list[setting.premium_skin])) #{i}
+        .field
+          label.label Premium Area Background
+          .control
+            .select
+              select(name="premium_bg")
+                each i in premium_bg_list
+                  option(selected=(i==premium_bg_list[setting.premium_skin])) #{i}
+        .field
+          label.label Premium Area Background Brightness
+          .control
+            .select
+              select(name="premium_bg_brightness")
+                each i in premiumbg_bright_list
+                  option(selected=(i==premiumbg_bright_list[lightning_settings.brightness])) #{i}
         .field
           label.label Note Burst
           .control
@@ -756,6 +825,10 @@ div
           label.label QPRO Body
           .control
             input.input(type="number" name="qpro_body", value=setting.qpro_body)
+        .field
+          label.label QPRO Back
+          .control
+            input.input(type="number" name="qpro_back", value=setting.qpro_back)
         .field
           label.label Random Lane Ticket
           .control

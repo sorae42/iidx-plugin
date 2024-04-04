@@ -13,7 +13,6 @@ import {
   pcgetname,
   pcvisit,
   pcgetlanegacha,
-  pcgetcompeinfo,
 } from "./handlers/IIDXpc";
 import {
   musicreg,
@@ -21,6 +20,7 @@ import {
   musicappoint,
   musiccrate,
   musicretry,
+  musicarenacpu,
 } from "./handlers/IIDXmusic";
 import { systeminfo } from "./handlers/IIDXgamesystem";
 import { graderaised } from "./handlers/IIDXgrade";
@@ -135,7 +135,6 @@ export function register() {
   MultiRoute("pc.consumeLaneGachaTicket", true);
   MultiRoute("pc.drawLaneGacha", true);
   MultiRoute("pc.getLaneGachaTicket", pcgetlanegacha);
-  MultiRoute("pc.getCompeInfo", pcgetcompeinfo)
 
   //music
   MultiRoute("music.getrank", musicgetrank);
@@ -145,7 +144,7 @@ export function register() {
   MultiRoute("music.crate", musiccrate);
   MultiRoute("music.appoint", musicappoint);
   MultiRoute("music.nosave", true);
-  //MultiRoute("music.arenaCPU", true);
+  MultiRoute("music.arenaCPU", musicarenacpu);
   //MultiRoute("music.movieinfo", true);
   MultiRoute("music.retry", musicretry);
 

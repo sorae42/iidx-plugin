@@ -8,6 +8,7 @@ export interface lightning_settings {
 
   headphone_vol: number;
   keyboard_kind: number;
+  brightness: number;
 
   resistance_sp_left: number;
   resistance_sp_right: number;
@@ -34,6 +35,7 @@ export const TDJ_settings = {
 
   headphone_vol: 10,
   keyboard_kind: 10, // default to qwerty //
+  brightness: 2,
 
   resistance_sp_left: 4,
   resistance_sp_right: 4,

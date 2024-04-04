@@ -8,25 +8,25 @@ export function IDToCode(id: number) {
 }
 
 export function base64decode(s: string) {
-  const base64list =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-  let t = "",
-    p = -8,
+  const base64list = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+  let p = -8,
     a = 0,
     c: number,
-    d: number;
+    d: number,
+    buffer: number[] = [];
 
   for (let i = 0; i < s.length; i++) {
     if ((c = base64list.indexOf(s.charAt(i))) < 0) continue;
     a = (a << 6) | (c & 63);
     if ((p += 6) >= 0) {
       d = (a >> p) & 255;
-      if (c != 64) t += String.fromCharCode(d);
+      if (c !== 64) buffer.push(d);
       a &= 63;
       p -= 8;
     }
   }
-  return t;
+
+  return buffer;
 }
 
 export function GetVersion(info: EamuseInfo) {
@@ -115,8 +115,16 @@ export function DateToName(now: number, score_time: number) {
   }
 }
 
-export function buffToHex(buff) {
-  return Buffer.from(buff).toString("hex");
+export function buffToHex(buff: number[]) {
+  let hexString = "";
+  for (let i = 0; i < buff.length; i++) {
+    const hex = buff[i].toString(16);
+    const paddedHex = hex.length % 2 ? "0" + hex : hex;
+
+    hexString += paddedHex;
+  }
+
+  return hexString;
 }
 
 export function randomIntRange(min, max) {
@@ -158,9 +166,10 @@ export async function refidToQpro(refid: string) {
       setting.qpro_face,
       setting.qpro_body,
       setting.qpro_hand,
+      setting.qpro_back,
     ];
   } catch {
-    qpro_data = [0, 0, 0, 0, 0];
+    qpro_data = [0, 0, 0, 0, 0, 0];
   } 
   
   return qpro_data;

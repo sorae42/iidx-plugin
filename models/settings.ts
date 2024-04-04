@@ -36,12 +36,14 @@ export interface settings {
   category_vox: number;
   judge_pos: number;
   premium_skin: number;
+  premium_bg: number;
 
   qpro_head: number;
   qpro_hair: number;
   qpro_hand: number;
   qpro_face: number;
   qpro_body: number;
+  qpro_back: number;
 
   random_lane_ticket: number[];
   random_lane_ticket_search: number[];
@@ -87,12 +89,14 @@ export const settings_data = {
   category_vox: 0,
   judge_pos: 0,
   premium_skin: 0,
+  premium_bg: 0,
 
   qpro_head: 0,
   qpro_hair: 0,
   qpro_hand: 0,
   qpro_face: 0,
   qpro_body: 0,
+  qpro_back: 0,
 
   random_lane_ticket: [],
   random_lane_ticket_search: [],

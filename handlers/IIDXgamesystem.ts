@@ -22,6 +22,9 @@ export const systeminfo: EPR = async (info, data, send) => {
   } else if (version == 31) {
     send.pugFile("pug/31systeminfo.pug", {
       boss: U.GetConfig("BossPhase"),
+      event_1: U.GetConfig("Event1Phase"),
+      event_1_internal: U.GetConfig("Event1InternalPhase"),
+      extra_boss: U.GetConfig("ExtraBossPhase"),
     });
   }
   else { send.success(); }

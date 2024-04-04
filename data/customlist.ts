@@ -35,7 +35,8 @@ export const noteburst_list: string[] = [
   "HEROIC VERSE",
   "BISTROVERボム",
   "いいねフラッシュ",
-  "RESIDENT"
+  "RESIDENT",
+  "EPOLIS",
 ];
 
 export const turntable_list: string[] = [
@@ -82,6 +83,7 @@ export const turntable_list: string[] = [
   "BPLS2 レジャーランド",
   "RESIDENT",
   "BEMANI PRO LEAGUE SEASON 3",
+  "EPOLIS",
 ];
 
 export const lanecover_list: string[] = [
@@ -371,6 +373,29 @@ export const lanecover_list: string[] = [
   "BPLS3 TAITO STATION Tradz",
   "BPLS3 ROUND1",
   "BPLS3 レジャーランド",
+  "Beyond Evolution",
+  "AWA AWA",
+  "BIGWAVERS",
+  "ONE AND ONLY",
+  "■□模様",
+  "ちょえちょえまぎか",
+  "栄冠のカンパネラ",
+  "Xerulean",
+  "STRAIGHT TO THE STARS",
+  "JUSTICE/GUILTY",
+  "EPOLIS UI",
+  "Dahlia",
+  "シンデレラ",
+  "れとりば！",
+  "夢縁",
+  "SOLAR ECLIPSE",
+  "Ghost Pulse",
+  "Iris",
+  "Get Higher",
+  "アタシ完全絶対正義ちゃん！",
+  "dj CELICA (IIDX31)",
+  "dj SHEM (IIDX31)",
+  "dj AMETO (IIDX30)",
 ];
 
 export const notes_list: string[] = [
@@ -408,7 +433,8 @@ export const fullcombo_list: string[] = [
   "HEROIC VERSE",
   "BISTROVER SLASH",
   "CastHour",
-  "RESIDENT"
+  "RESIDENT",
+  "EPOLIS",
 ];
 
 export const keybeam_list: string[] = [
@@ -424,6 +450,7 @@ export const keybeam_list: string[] = [
   "BISTROVER BURNER",
   "フレネルビーム",
   "RESIDENT",
+  "EPOLIS",
 ];
 
 export const judge_list: string[] = [
@@ -445,6 +472,7 @@ export const judge_list: string[] = [
   "BISTROVER JUDGE",
   "CastHour",
   "RESIDENT",
+  "EPOLIS",
 ];
 
 export const premium_skin_list: string[] = [
@@ -459,6 +487,25 @@ export const premium_skin_list: string[] = [
   "BPLS3 TAITO Tradz",
   "BPLS3 ROUND1",
   "BPLS3 レジャーランド",
+];
+
+export const premium_bg_list: string[] = [
+  "デフォルト",
+  "EPOLIS",
+  "エポリスシティへようこそ！",
+  "Ghost Pulse",
+  "Glitch N Ride",
+  "JUSTICE/GUILTY",
+  "シンデレラ",
+  "Iris",
+  "SOLAR ECLIPSE",
+  "TECHNOPHOBIA",
+  "CUE CUE RESCUE",
+  "STRAIGHT TO THE STARS",
+  "AWA AWA",
+  "ちょえちょえまぎか",
+  "ONE AND ONLY",
+  "クプロがたくさん",
 ];
 
 export const effect_list: string[] = [
@@ -482,15 +529,15 @@ export const bombsize_list: string[] = [
 
 export const notesize_list = [
   "通常",
-  "極細",
   "細",
+  "極細",
   "太",
 ];
 
 export const notebeamsize_list = [
   "通常",
-  "ベリーショート",
   "ショート",
+  "ベリーショート",
   "ロング",
 ];
 
@@ -502,4 +549,11 @@ export const first_note_preview_list: string[] = [
 
 export const category_vox_list: string[] = [
   "デフォルト"
+];
+
+export const premiumbg_bright_list: string[] = [
+  "暗い",
+  "やや暗い",
+  "やや明るい",
+  "明るい",
 ];

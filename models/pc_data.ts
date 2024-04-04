@@ -117,6 +117,7 @@ export interface pc_data {
   event_last_platform_id: number; // 29 //
   event_last_platform_type: number;
   event_last_select_flyer_id: number; // 30 //
+  event_last_select_map_id: number; // 31 //
 }
 
 export const IIDX27_pc_data = {
@@ -621,7 +622,7 @@ export const IIDX31_pc_data = {
   d_auto_adjust: 0,
 
   event_play_num: 0,
-  event_last_select_flyer_id: 0,
+  event_last_select_map_id: 0,
 
   player_kind: 0,
   s_classic_hispeed: 0,

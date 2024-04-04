@@ -26,7 +26,7 @@ export const graderaised: EPR = async (info, data, send) => {
   });
 
   const isTDJ = !(_.isNil($(data).element("lightning_play_data"))); // use this element to determine [TDJ] instead of info.model //
-  const hasEiseiData = (!(_.isNil($(data).element("eisei_data"))) || !(_.isNil($(data).element("eisei_grade_data"))));;
+  const hasEiseiData = (!(_.isNil($(data).element("eisei_data"))) || !(_.isNil($(data).element("eisei_grade_data"))) || !(_.isNil($(data).element("kiwami_data"))));
 
   if (isTDJ && hasEiseiData) {
     let eisei_clear_type: number;
@@ -40,15 +40,19 @@ export const graderaised: EPR = async (info, data, send) => {
     let eisei_max_past_achievement: number[];
     let eisei_max_past_selected_course: number[];
 
-    if (version == 27) {
-      eisei_clear_type = parseInt($(data).element("eisei_data").attr().clear_type);
-      eisei_grade_id = parseInt($(data).element("eisei_data").attr().grade_id);
-      eisei_grade_type = parseInt($(data).element("eisei_data").attr().grade_type);
-      eisei_stage_num = parseInt($(data).element("eisei_data").attr().stage_num);
+    if (version == 31) {
+      eisei_clear_type = parseInt($(data).attr("kiwami_data").clear_type);
+      eisei_grade_id = parseInt($(data).attr("kiwami_data").grade_id);
+      eisei_grade_type = parseInt($(data).attr("kiwami_data").grade_type);
+      eisei_stage_num = parseInt($(data).attr("kiwami_data").stage_num);
+      eisei_option = parseInt($(data).attr("kiwami_data").option);
 
-      eisei_past_achievement = $(data).element("eisei_data").numbers("past_achievement");
-      eisei_max_past_achievement = $(data).element("eisei_data").numbers("max_past_achievement");
-    } if (version == 30) {
+      eisei_past_achievement = $(data).element("kiwami_data").numbers("past_achievement");
+      eisei_past_selected_course = $(data).element("kiwami_data").numbers("past_selected_course");
+      eisei_max_past_achievement = $(data).element("kiwami_data").numbers("max_past_achievement");
+      eisei_max_past_selected_course = $(data).element("kiwami_data").numbers("max_past_selected_course");
+    }
+    else if (version == 30) {
       eisei_clear_type = parseInt($(data).element("eisei_data").attr().clear_type);
       eisei_grade_id = parseInt($(data).element("eisei_data").attr().grade_id);
       eisei_grade_type = parseInt($(data).element("eisei_data").attr().grade_type);
@@ -59,7 +63,17 @@ export const graderaised: EPR = async (info, data, send) => {
       eisei_past_selected_course = $(data).element("eisei_data").numbers("past_selected_course");
       eisei_max_past_achievement = $(data).element("eisei_data").numbers("max_past_achievement");
       eisei_max_past_selected_course = $(data).element("eisei_data").numbers("max_past_selected_course");
-    } else {
+    }
+    else if (version == 27) {
+      eisei_clear_type = parseInt($(data).element("eisei_data").attr().clear_type);
+      eisei_grade_id = parseInt($(data).element("eisei_data").attr().grade_id);
+      eisei_grade_type = parseInt($(data).element("eisei_data").attr().grade_type);
+      eisei_stage_num = parseInt($(data).element("eisei_data").attr().stage_num);
+
+      eisei_past_achievement = $(data).element("eisei_data").numbers("past_achievement");
+      eisei_max_past_achievement = $(data).element("eisei_data").numbers("max_past_achievement");
+    }
+    else {
       eisei_clear_type = parseInt($(data).element("eisei_grade_data").attr().clear_type);
       eisei_grade_id = parseInt($(data).element("eisei_grade_data").attr().grade_id);
       eisei_grade_type = parseInt($(data).element("eisei_grade_data").attr().grade_type);

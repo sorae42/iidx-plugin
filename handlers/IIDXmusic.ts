@@ -435,11 +435,11 @@ export const musicreg: EPR = async (info, data, send) => {
       }
     );
   } else {
-    if (score_top.scores[tmp_clid] < mArray[rank + 7]) { // migration //
+    if (mArray[rank + 7] > score_top.scores[tmp_clid]) { // migration //
       score_top.names[tmp_clid] = profile.name;
       score_top.scores[tmp_clid] = mArray[rank + 7];
       score_top.clflgs[tmp_clid] = mArray[rank + 2];
-    } else if (score_top.scores[tmp_clid] < exscore) {
+    } else if (exscore > score_top.scores[tmp_clid]) {
       score_top.names[tmp_clid] = profile.name;
       score_top.scores[tmp_clid] = Number(exscore);
       score_top.clflgs[tmp_clid] = Number(clear);
@@ -624,20 +624,20 @@ export const musicappoint: EPR = async (info, data, send) => {
     oGhost = null;
 
   /* ctype
-   *[-1] - DEFAULT
-   * [1] - RIVAL
-   * [2] - ALL TOP
-   * [3] - ALL AVG.
-   * [4] - LOCATION TOP
-   * [5] - LOCATION AVG.
-   * [6] - SAME DAN TOP
-   * [7] - SAME DAN AVG.
-   * [8] - RIVAL TOP
-   * [9] - RIVAL AVG.
-   * [10] - STORE TOP
-   * [13] - RIVAL NEXT
-   * [14] - STORE ROTATE
-   * [15] - RIVAL ROTATE
+   * [-1] - DEFAULT
+   *  [1] - RIVAL
+   *  [2] - ALL TOP
+   *  [3] - ALL AVG.
+   *  [4] - LOCATION TOP
+   *  [5] - LOCATION AVG.
+   *  [6] - SAME DAN TOP
+   *  [7] - SAME DAN AVG.
+   *  [8] - RIVAL TOP
+   *  [9] - RIVAL AVG.
+   *  [10] - STORE TOP
+   *  [13] - RIVAL NEXT
+   *  [14] - STORE ROTATE
+   *  [15] - RIVAL ROTATE
    */
 
   // OTHERS //
@@ -1098,3 +1098,36 @@ export const musicretry: EPR = async (info, data, send) => {
 
   send.pugFile("pug/musicretry.pug", { version });
 };
+
+export const musicarenacpu: EPR = async (info, data, send) => {
+  const version = GetVersion(info);
+  if (version == -1) return send.deny();
+
+  let cpu_score_list = [], total_notes = [];
+  $(data).elements("music_list").forEach((res) => {
+    total_notes.push(res.number("total_notes"));
+  });
+
+  for (let a = 0; a < $(data).elements("cpu_list").length; a++) {
+    let score_list = [];
+
+    total_notes.forEach((res, index) => {
+      score_list.push({
+        index: K.ITEM("s32", index),
+        score: K.ITEM("s32", _.random(res, res * 2)),
+        ghost: K.ARRAY("s8", [0]), // u8 - older , s8 - epolis //
+        enable_score: K.ITEM("bool", 1),
+        enable_ghost: K.ITEM("bool", 0),
+      });
+    })
+
+    cpu_score_list.push({
+      index: K.ITEM("s32", a),
+      score_list,
+    });
+  }
+
+  return send.object({
+    cpu_score_list,
+  })
+}
