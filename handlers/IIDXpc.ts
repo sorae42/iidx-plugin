@@ -322,6 +322,22 @@ export const pcget: EPR = async (info, data, send) => {
           break;
       }
     }
+
+    if (_.isNil(settings.disable_basicoption)) {
+      await DB.Upsert<settings>(refid,
+        {
+          collection: "settings",
+        },
+        {
+          $set: {
+            disable_basicoption: false,
+          }
+        }
+      );
+
+      settings.disable_basicoption = false;
+    }
+
     const appendsetting = AppendSettingConverter(
       settings.score_folders,
       settings.clear_folders,
@@ -334,12 +350,11 @@ export const pcget: EPR = async (info, data, send) => {
       settings.disable_graphcutin,
       settings.classic_hispeed,
       settings.rival_played,
-      settings.hide_iidxid
+      settings.hide_iidxid,
+      settings.disable_basicoption,
     );
     let rivals = await DB.Find<rival>(refid, { collection: "rival" });
     let world_tourism = await DB.Find<world_tourism>(refid, { collection: "world_tourism" });
-    let event_1 = await DB.Find(refid, { collection: "event_1", version: version });
-    let event_1s = await DB.Find(refid, { collection: "event_1_sub", version: version });
 
     let lightning_settings = await DB.FindOne<lightning_settings>(refid, { collection: "lightning_settings", version: version });
     let lightning_playdata = await DB.FindOne<lightning_playdata>(refid, { collection: "lightning_playdata", version: version });
@@ -662,44 +677,25 @@ export const pcget: EPR = async (info, data, send) => {
     // event_1 //
     let evtArray = [], evtArray2 = [], evtArray3 = [];
     if (version == 31) {
-      event_1.forEach((evt: any) => {
-        evtArray.push({
-          map_id: evt.map_id,
+      let myepo_map = await DB.Find(refid, { collection: "event_1", version: version, event_data: "myepo_map" });
+      let myepo_building = await DB.Find(refid, { collection: "event_1_sub", version: version, event_data: "myepo_building" });
+      let myepo_shop = await DB.Find(refid, { collection: "event_1_sub", version: version, event_data: "myepo_shop" });
 
-          play_num: evt.play_num,
-          play_num_uc: evt.play_num_uc,
-          last_select_pos: evt.last_select_pos,
-          map_prog: evt.map_prog,
-          gauge: evt.gauge,
-          tile_num: evt.tile_num,
-          metron_total_get: evt.metron_total_get,
-          metron_total_use: evt.metron_total_use,
-          bank_date: evt.bank_date,
-          grade_bonus: evt.grade_bonus,
-          end_bonus: evt.end_bonus,
+      myepo_map.forEach((res: any) => {
+        let data = {
+          ...res,
           carryover_use: 0,
-        });
+        };
 
-        evt.buildingArray.forEach((res) => {
-          evtArray2.push({
-            map_id: evt.map_id,
-
-            pos: res.pos,
-            building: res.building,
-            use_tile: res.use_tile,
-          });
-        });
-
-        evt.shopArray.forEach((res) => {
-          evtArray3.push({
-            map_id: evt.map_id,
-
-            reward_id: res.reward_id,
-            prog: res.prog,
-          });
-        });
+        evtArray.push(data);
       });
+
+      evtArray2 = myepo_building;
+      evtArray3 = myepo_shop;
     } else {
+      let event_1 = await DB.Find(refid, { collection: "event_1", version: version });
+      let event_1s = await DB.Find(refid, { collection: "event_1_sub", version: version });
+
       if (event_1.length > 0) {
         for (let evt of event_1) {
           evtArray.push(evt);
@@ -778,6 +774,9 @@ export const pcget: EPR = async (info, data, send) => {
         evtArray2,
       });
     } else if (version == 31) {
+      let epores = await DB.FindOne(refid, { collection: "event_1", version: version, event_data: "epores" });
+      let epores_data = await DB.Find(refid, { collection: "event_1_sub", version: version, event_data: "epores_system" });
+
       send.pugFile("pug/31get.pug", {
         profile,
         settings,
@@ -795,6 +794,8 @@ export const pcget: EPR = async (info, data, send) => {
         evtArray,
         evtArray2,
         evtArray3,
+        epores,
+        epores_data,
       });
     }
   }
@@ -1087,7 +1088,7 @@ export const pcsave: EPR = async (info, data, send) => {
     });
   }
 
-  let event_data, event_sub_data, eArray = [];
+  let event_data, event_sub_data, eArray = [], eArray2 = [];
   if (hasEventData) {
     if (_.isNil(event_play_num)) { event_play_num = 0; }
     event_play_num += 1;
@@ -1215,6 +1216,8 @@ export const pcsave: EPR = async (info, data, send) => {
         let buildingArray = [];
         res.elements("building_data").forEach((res) => {
           let building_data = {
+            map_id,
+
             pos: res.attr().pos,
             building: res.attr().building,
             use_tile: res.attr().use_tile,
@@ -1226,6 +1229,8 @@ export const pcsave: EPR = async (info, data, send) => {
         let shopArray = [];
         res.elements("shop_data").forEach((res) => {
           let shop_data = {
+            map_id,
+
             reward_id: res.attr().reward_id,
             prog: res.attr().prog,
           }
@@ -1241,9 +1246,9 @@ export const pcsave: EPR = async (info, data, send) => {
           }
 
           musicArray.push(music_data);
-        });
+        }); // these are saved but will not used for now //
 
-        event_data = {
+        let map_data = {
           map_id,
 
           play_num: res.attr().play_num,
@@ -1258,14 +1263,25 @@ export const pcsave: EPR = async (info, data, send) => {
           grade_bonus: res.attr().grade_bonus,
           end_bonus: res.attr().end_bonus,
           fbonus: res.attr().fbonus,
-
-          buildingArray,
-          shopArray,
-          musicArray,
         };
 
-        eArray.push(event_data);
+        eArray.push([map_data, buildingArray, shopArray, musicArray]);
       });
+
+      if (!_.isNil($(data).element("event_2"))) {
+        $(data).element("event_2").elements("system_data").forEach((res) => {
+          let system_data = {
+            system_id: res.attr().system_id,
+
+            play_num: res.attr().play_num,
+            unlock_prog: res.attr().unlock_prog,
+            system_prog: res.attr().system_prog,
+            gauge: res.attr().gauge,
+          }
+
+          eArray2.push(system_data);
+        });
+      }
     }
   }
 
@@ -1404,7 +1420,7 @@ export const pcsave: EPR = async (info, data, send) => {
     let skinData = $(data).elements("skin_equip");
     let note_burst, bomb_size, turntable, judge_font,
       note_skin, note_size, lane_cover, pacemaker_cover, 
-      lift_cover, note_beam, note_beam_size, full_combo_splash;
+      lift_cover, note_beam, note_beam_size, full_combo_splash, frame;
 
     skinData.forEach((res) => {
       if (parseInt(res.attr().skin_id) == 1) { note_burst = parseInt(res.attr().skin_no); }
@@ -1420,6 +1436,7 @@ export const pcsave: EPR = async (info, data, send) => {
       else if (parseInt(res.attr().skin_id) == 16) { note_beam = parseInt(res.attr().skin_no); }
       else if (parseInt(res.attr().skin_id) == 17) { note_beam_size = parseInt(res.attr().skin_no); }
       else if (parseInt(res.attr().skin_id) == 18) { full_combo_splash = parseInt(res.attr().skin_no); }
+      else if (parseInt(res.attr().skin_id) == 19) { frame = parseInt(res.attr().skin_no); }
     });
 
     await DB.Upsert<settings>(
@@ -1442,6 +1459,7 @@ export const pcsave: EPR = async (info, data, send) => {
           note_beam,
           note_beam_size,
           full_combo_splash,
+          frame,
         }
       });
   }
@@ -2568,13 +2586,90 @@ export const pcsave: EPR = async (info, data, send) => {
       });
 
       eArray.forEach((res) => {
+        // map_data //
         DB.Upsert(refid, {
           collection: "event_1",
           version: version,
-          map_id: res.map_id,
+          event_data: "myepo_map",
+          map_id: res[0].map_id,
         },
         {
-          $set: res,
+          $set: res[0],
+        });
+
+        // building_data //
+        res[1].forEach((res) => {
+          DB.Upsert(refid, {
+            collection: "event_1_sub",
+            version: version,
+            event_data: "myepo_building",
+            map_id: res.map_id,
+            pos: res.pos,
+          },
+          {
+            $set: res,
+          });
+        });
+
+        // shop_data //
+        res[2].forEach((res) => {
+          DB.Upsert(refid, {
+            collection: "event_1_sub",
+            version: version,
+            event_data: "myepo_shop",
+            map_id: res.map_id,
+            reward_id: res.reward_id,
+          },
+          {
+            $set: res,
+          });
+        });
+
+        // music //
+        res[3].forEach((res) => {
+          DB.Upsert(refid, {
+            collection: "event_1_sub",
+            version: version,
+            event_data: "myepo_music",
+          },
+          {
+            $set: res,
+          });
+        });
+      });
+    }
+
+    // event_2 //
+    if (!_.isNil($(data).element("event_2"))) {
+      // pack_id, pack_flg, play_pack - UNK //
+      // erosion_play_num, erosion5_clear12_num aren't being sent //
+      await DB.Upsert(refid,
+        {
+          collection: "event_1",
+          version: version,
+          event_data: "epores",
+        },
+        {
+          $set: {
+            event_play_num: $(data).attr("event_2").event_play_num,
+            after_play_num: $(data).attr("event_2").after_play_num,
+            last_select_system_id: $(data).attr("event_2").last_select_system_id,
+            gate_key: $(data).attr("event_2").gate_key,
+            after_gauge: $(data).attr("event_2").after_gauge,
+            last_select_erosion_level: $(data).attr("event_2").last_select_erosion_level,
+          }
+        }
+      );
+
+      eArray2.forEach((res) => {
+        DB.Upsert(refid, {
+          collection: "event_1_sub",
+          version: version,
+          event_data: "epores_system",
+          system_id: res.system_id,
+        },
+          {
+            $set: res,
         });
       });
     }
@@ -2586,11 +2681,11 @@ export const pcsave: EPR = async (info, data, send) => {
 export const pcvisit: EPR = async (info, data, send) => {
   send.object(K.ATTR({
     aflg: "1",
-    anum: "1",
+    anum: "10",
     pflg: "1",
-    pnum: "1",
+    pnum: "10",
     sflg: "1",
-    snum: "1",
+    snum: "10",
   }));
 };
 

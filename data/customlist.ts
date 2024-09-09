@@ -5,6 +5,13 @@
 
 export const frame_list: string[] = [
   "デフォルト",
+  "BPLS4 APINA VRAMeS",
+  "BPLS4 GiGO",
+  "BPLS4 GAME PANIC",
+  "BPLS4 SILK HAT",
+  "BPLS4 TAITO STATION Tradz",
+  "BPLS4 ROUND1",
+  "BPLS4 レジャーランド",
 ];
 
 export const menumusic_list: string[] = [

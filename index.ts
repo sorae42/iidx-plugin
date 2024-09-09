@@ -25,7 +25,7 @@ import {
 import { systeminfo } from "./handlers/IIDXgamesystem";
 import { graderaised } from "./handlers/IIDXgrade";
 import { ShopRanking_list } from "./data/settingslist";
-import { updateProfileSettings, updateRivalSettings } from "./handlers/webui";
+import { exportScoreData, updateProfileSettings, updateRivalSettings } from "./handlers/webui";
 
 export function register() {
   if (CORE_VERSION_MAJOR <= 1 && CORE_VERSION_MINOR < 31) {
@@ -97,6 +97,7 @@ export function register() {
 
   R.WebUIEvent("updateIIDXProfileSettings", updateProfileSettings);
   R.WebUIEvent("updateIIDXRivalSettings", updateRivalSettings);
+  R.WebUIEvent("exportScoreData", exportScoreData);
 
   R.GameCode("LDJ");
   R.GameCode("TDJ"); // This is not used in [TDJ mode] but has been added just in case. //
@@ -135,6 +136,10 @@ export function register() {
   MultiRoute("pc.consumeLaneGachaTicket", true);
   MultiRoute("pc.drawLaneGacha", true);
   MultiRoute("pc.getLaneGachaTicket", pcgetlanegacha);
+  MultiRoute("pc.getCompeInfo", true)
+  MultiRoute("pc.compeOrganize", true);
+  MultiRoute("pc.compeEntry", true);
+  MultiRoute("pc.compeSearch", true);
 
   //music
   MultiRoute("music.getrank", musicgetrank);

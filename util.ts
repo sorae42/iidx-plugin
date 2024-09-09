@@ -72,6 +72,7 @@ export function AppendSettingConverter(
   ch: boolean,
   rp: boolean,
   hi: boolean,
+  dbo: boolean,
 ) {
   const result =
     Number(sf) << 0 |
@@ -86,7 +87,8 @@ export function AppendSettingConverter(
     Number(dg) << 9 |
     Number(ch) << 10 |
     Number(rp) << 11 |
-    Number(hi) << 12;
+    Number(hi) << 12 |
+    Number(dbo) << 14;
     
   return result;
 }

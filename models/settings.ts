@@ -26,6 +26,7 @@ export interface settings {
   classic_hispeed: boolean;
   hide_iidxid: boolean;
   rival_played: boolean;
+  disable_basicoption: boolean;
   disable_musicpreview: number;
   vefx_lock: number;
   effect: number;
@@ -79,6 +80,7 @@ export const settings_data = {
   classic_hispeed: false,
   rival_played: true,
   hide_iidxid: false,
+  disable_basicoption: false,
   disable_musicpreview: 0,
   vefx_lock: 0,
   effect: 0,

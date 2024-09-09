@@ -22,6 +22,7 @@ import {
   premium_bg_list,
   premiumbg_bright_list,
 } from "../data/customlist";
+import { score } from "../models/score";
 
 export const updateProfileSettings = async (data: {
   // All of data sent as string
@@ -56,6 +57,7 @@ export const updateProfileSettings = async (data: {
   bomb_size?: string;
   disable_hcn_color?: string;
   first_note_preview?: string;
+  disable_basicoption?: string;
 
   premium_skin?: string;
   premium_bg?: string;
@@ -167,6 +169,7 @@ export const updateProfileSettings = async (data: {
   update.disable_musicpreview = Number(stb(data.disable_musicpreview))
   update.vefx_lock = Number(stb(data.vefx_lock))
   update.disable_hcn_color = Number(stb(data.disable_hcn_color))
+  update.disable_basicoption = stb(data.disable_basicoption)
 
   // Numeric Field
   if (data.skin_bgm_flg && data.skin_bgm_flg.length > 0) {
@@ -283,7 +286,7 @@ export const updateProfileSettings = async (data: {
     { collection: 'settings' },
     { $set: update }
   );
-};
+}
 
 export const updateRivalSettings = async (data: {
   // All of data sent as string
@@ -537,7 +540,23 @@ export const updateRivalSettings = async (data: {
       }
     )
   }
-};
+}
+
+export const exportScoreData = async (data: { refid: string; }, send: WebUISend) => {
+  const score = await DB.Find<score>(data.refid, {
+    collection: "score"
+  });
+
+  let result = {
+    version: 1,
+    count: score.length,
+    data: {
+      ...score,
+    },
+  }
+
+  send.json(result);
+}
 
 function stb(s: string | null): boolean {
   if (_.isNil(s)) return false;

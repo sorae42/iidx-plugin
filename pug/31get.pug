@@ -45,7 +45,7 @@ IIDX31pc(status="0" qproback=settings.qpro_back)
         selected_course(__type="s32" __count="3") #{ed.selected_course[0]} #{ed.selected_course[1]} #{ed.selected_course[2]}
         max_past(__type="s32" __count="3") #{ed.max_past[0]} #{ed.max_past[1]} #{ed.max_past[2]}
         max_selected_course(__type="s32" __count="3") #{ed.max_selected_course[0]} #{ed.max_selected_course[1]} #{ed.max_selected_course[2]}
-  skin(__type="s32" __count="20") #{appendsetting} #{settings.note_burst} #{settings.bomb_size} #{settings.turntable} #{settings.judge_font} #{settings.note_skin} #{settings.note_size} #{settings.disable_musicpreview} #{settings.vefx_lock} #{settings.effect} #{settings.menu_music} #{settings.disable_hcn_color} #{settings.first_note_preview} #{settings.lane_cover} #{settings.pacemaker_cover} #{settings.lift_cover} #{settings.note_beam} #{settings.note_beam_size} #{settings.full_combo_splash} 0
+  skin(__type="s32" __count="20") #{appendsetting} #{settings.note_burst} #{settings.bomb_size} #{settings.turntable} #{settings.judge_font} #{settings.note_skin} #{settings.note_size} #{settings.disable_musicpreview} #{settings.vefx_lock} #{settings.effect} #{settings.menu_music} #{settings.disable_hcn_color} #{settings.first_note_preview} #{settings.lane_cover} #{settings.pacemaker_cover} #{settings.lift_cover} #{settings.note_beam} #{settings.note_beam_size} #{settings.full_combo_splash} #{settings.frame}
   tdjskin(__type="s16" __count="4") #{settings.premium_skin} #{settings.premium_bg} 0 0
   qprodata(__type="u32" __count="6") #{settings.qpro_head} #{settings.qpro_hair} #{settings.qpro_face} #{settings.qpro_hand} #{settings.qpro_body}
   rlist
@@ -86,6 +86,10 @@ IIDX31pc(status="0" qproback=settings.qpro_back)
       building_data(map_id=evt2.map_id pos=evt2.pos building=evt2.building use_tile=evt2.use_tile)
     - for (let evt3 of evtArray3)
       shop_data(map_id=evt3.map_id reward_id=evt3.reward_id prog=evt3.prog)
+  if epores != null
+    event_2(event_play_num=epores.event_play_num after_play_num=epores.after_play_num last_select_system_id=epores.last_select_system_id gate_key=epores.gate_key after_gauge=epores.after_gauge last_select_erosion_level=epores.last_select_erosion_level pack="-1" erosion_play_num="10" erosion5_clear12_num="10")
+      - for (let data of epores_data)
+        system_data(system_id=data.system_id play_num=data.play_num unlock_prog=data.unlock_prog system_prog=data.system_prog gauge=data.gauge)
   ultimate_mobile_link(music_list="-1")
     link_flag
   valkyrie_linkage(music_list_1="-1" music_list_2="-1" music_list_3="-1")
@@ -103,6 +107,7 @@ IIDX31pc(status="0" qproback=settings.qpro_back)
     flg2(__type="s64" __count="3") -1 -1 -1
   world_tourism_setting
     booster(__type="bool") 1
+  bpl_s4_music_unlock
   badge
     badge_data(category_id="0" badge_flg_id="0" badge_flg="0")
     badge_equip(category_id="0" badge_flg="0" badge_flg_id="0" index="0" slot="0")

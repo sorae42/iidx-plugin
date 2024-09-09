@@ -1,6 +1,6 @@
 # IIDX
 
-Plugin Version: **v1.4.4_a8**
+Plugin Version: **v1.4.4_a12**
 
 This is A Core IIDX Plugin.
 
