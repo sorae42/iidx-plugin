@@ -11,9 +11,7 @@ export interface rival_data {
   play_style: number;
   index: number;
 
-  is_robo: boolean;
-
   qprodata: number[];
   profile: (string | number)[];
-  pc_data: number[];
+  pcdata: number[];
 }
