@@ -1,3 +1,12 @@
+# OUTDATED!!!
+This plugin is no longer compatible with newer game version and DOES NOT COMPATIBLE WITH THE OFFICIAL PLUGINS.
+
+I will not updating this repo for newer games.
+
+You should be using [@duel0213/asphyxia-plugins/staging](https://github.com/duel0213/asphyxia-plugins/tree/staging) instead. This one is more inline compatible with the official Asphyxia plugin than @patapancakes (which is what this fork based on).
+
+Score will not be transferrable over to @duel0213's plugin. You will be starting over. We will not help you with this.
+
 # beatmaniaIIDX
 
 Plugin Version: **v0.1.16**
@@ -23,6 +32,7 @@ Supported Versions
   - beatmaniaIIDX 29 CastHour (2022082400)
   - beatmaniaIIDX 30 RESIDENT (2023090500)
   - beatmaniaIIDX 31 EPOLIS (2024082600)
+  - beatmaniaIIDX 32 Pinky Crush (TBD)
 
 ---
 
@@ -157,3 +167,4 @@ Changelogs
 
 **v0.2.0
   - Added Initial support for Pinky Crush
+
