@@ -3,7 +3,7 @@ This plugin is no longer compatible with newer game version and DOES NOT COMPATI
 
 I will not updating this repo for newer games.
 
-You should be using [@duel0213/asphyxia-plugins/staging](https://github.com/duel0213/asphyxia-plugins/tree/staging) instead. This one is more inline compatible with the official Asphyxia plugin than @patapancakes (which is what this fork based on).
+You should be using [@duel0213/asphyxia-plugins (staging branch)](https://github.com/duel0213/asphyxia-plugins/tree/staging/iidx%40asphyxia) instead. This one is more up-to-date with n-0 and inline compatible with the official Asphyxia plugin than @patapancakes (which is what this fork based on).
 
 Score will not be transferrable over to @duel0213's plugin. You will be starting over. We will not help you with this.
 
@@ -167,4 +167,5 @@ Changelogs
 
 **v0.2.0
   - Added Initial support for Pinky Crush
+
 
